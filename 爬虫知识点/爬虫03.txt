@@ -1,0 +1,92 @@
+Introduction
+1. 第一章：网络请求
+1.1. 1-爬虫前奏
+1.2. 2-http协议和chrome浏览器
+1.3. 3-urllib库
+1.4. 4-requests库
+2. 第二章：数据提取
+2.1. 1.xpath语法与lxml库
+2.2. 2-BeautifulSoup4库
+2.3. 3-正则表达式和re模块
+3. 第三章：数据存储
+3.1. 1-json文件处理
+3.2. 2-csv文件处理
+3.3. 3-excel文件处理
+3.4. 4-MySQL数据库
+3.5. 5-MongoDB数据库
+4. 第四章：爬虫进阶
+4.1. 1-多线程爬虫
+4.2. 2-动态网页爬虫
+4.3. 3-图形验证码识别
+5. 第五章：Scrapy框架
+5.1. 1-框架架构
+5.2. 2-快速入门
+5.3. 3-CrawlSpider
+5.4. 4-ScrapyShell
+5.5. 5-Request和Response对象
+5.6. 6-下载文件和图片
+5.7. 7-下载中间件
+5.8. 8-settings配置信息
+5.9. 9-Scrapy爬虫实战
+6. 第六章：Scrapy-Redis分布式组件
+6.1. 1-redis数据库介绍
+6.2. 2-Scrapy-Redis组件介绍
+6.3. 3-搜房网分布式爬虫
+Published with GitBook
+爬虫教程
+json文件处理：
+什么是json：
+JSON(JavaScript Object Notation, JS 对象标记) 是一种轻量级的数据交换格式。它基于 ECMAScript (w3c制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。 易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。更多解释请见：https://baike.baidu.com/item/JSON/2462549?fr=aladdin
+
+JSON支持数据格式：
+对象（字典）。使用花括号。
+数组（列表）。使用方括号。
+整形、浮点型、布尔类型还有null类型。
+字符串类型（字符串必须要用双引号，不能用单引号）。
+多个数据之间使用逗号分开。
+注意：json本质上就是一个字符串。
+
+字典和列表转JSON：
+import json
+
+books = [
+    {
+        'title': '钢铁是怎样练成的',
+        'price': 9.8
+    },
+    {
+        'title': '红楼梦',
+        'price': 9.9
+    }
+]
+
+json_str = json.dumps(books,ensure_ascii=False)
+print(json_str)
+因为json在dump的时候，只能存放ascii的字符，因此会将中文进行转义，这时候我们可以使用ensure_ascii=False关闭这个特性。
+在Python中。只有基本数据类型才能转换成JSON格式的字符串。也即：int、float、str、list、dict、tuple。
+
+将json数据直接dump到文件中：
+json模块中除了dumps函数，还有一个dump函数，这个函数可以传入一个文件指针，直接将字符串dump到文件中。示例代码如下：
+
+books = [
+    {
+        'title': '钢铁是怎样练成的',
+        'price': 9.8
+    },
+    {
+        'title': '红楼梦',
+        'price': 9.9
+    }
+]
+with open('a.json','w') as fp:
+    json.dump(books,fp)
+将一个json字符串load成Python对象：
+json_str = '[{"title": "钢铁是怎样练成的", "price": 9.8}, {"title": "红楼梦", "price": 9.9}]'
+books = json.loads(json_str,encoding='utf-8')
+print(type(books))
+print(books)
+直接从文件中读取json：
+import json
+with open('a.json','r',encoding='utf-8') as fp:
+    json_str = json.load(fp)
+    print(json_str)
